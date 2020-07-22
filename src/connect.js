@@ -1,43 +1,38 @@
-'use strict';
+"use strict";
 
-var Sequelize = require('sequelize');
+var Sequelize = require("sequelize");
 
-var sequelize = new Sequelize('showtime', 'showtimeuser', '', {
-  host: 'localhost',
-  dialect: 'postgres',
+var sequelize = new Sequelize("showtime", "showtimeuser", "", {
+  host: "localhost",
+  dialect: "postgres",
   pool: {
     max: 5,
     min: 0,
-    idle: 10000
+    idle: 10000,
   },
-
 });
 
 // Model Defenition
-const Movies = sequelize.define('movies', {
-  id:
-  {
+const Movies = sequelize.define("movies", {
+  id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
   },
-  title:
-  {
+  title: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
-  genre:
-  {
+  genre: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
-  rating:
-  {
+  rating: {
     type: Sequelize.INTEGER,
-  }
-})
-Movies.sync()
+  },
+});
+Movies.sync();
 
 module.exports = {
-  Movies
-}
+  Movies,
+};
