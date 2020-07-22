@@ -5,10 +5,7 @@ const Hapi = require("hapi");
 const { configureRoutes } = require("./src/routes/routes");
 
 const server = new Hapi.Server();
-server.connection({ 
-    port: 80, 
-    host: "localhost" 
-});
+server.connection({ port: 3000, host: "localhost" });
 
 configureRoutes(server);
 server.start((err) => {
