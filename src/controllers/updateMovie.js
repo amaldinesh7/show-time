@@ -9,7 +9,7 @@ module.exports = {
       },
       {
         where: {
-          id: request.payload.movieid,
+          id: request.params.movieid,
         },
       }
     ).then((ans) => {

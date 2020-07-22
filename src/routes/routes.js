@@ -9,12 +9,12 @@ exports.configureRoutes = (server) => {
     },
     {
       method: "PUT",
-      path: "/updatemovie",
+      path: "/updatemovie/{movieid}",
       handler: controllers.updateMovie.updateMovie,
     },
     {
       method: "PUT",
-      path: "/updaterating",
+      path: "/updaterating/{movieid}",
       handler: controllers.updateRating.updateRating,
     },
     {
