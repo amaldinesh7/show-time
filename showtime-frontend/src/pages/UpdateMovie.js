@@ -16,6 +16,9 @@ import MoviesApi from '../api/MoviesApi';
 
 const CssTextField = withStyles({
     root: {
+        '& .MuiInputLabel-root':{
+            color:'#e9ecef'
+        },
         '& .MuiInputBase-input': {
             color: '#e9ecef'
         },

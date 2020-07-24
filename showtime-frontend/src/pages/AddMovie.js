@@ -20,6 +20,9 @@ import MoviesApi from '../api/MoviesApi';
 
 const CssTextField = withStyles({
     root: {
+        '& .MuiInputLabel-root':{
+            color:'#e9ecef'
+        },
         '& .MuiInputBase-input': {
             color: '#e9ecef'
         },
@@ -29,11 +32,10 @@ const CssTextField = withStyles({
         "& .MuiInputBase-input.Mui-disabled": {
             color: "'#e9ecef"
         },
-        '& .MuiInput-underline:after': {
-            borderBottomColor: '#e9ecef',
-            color: '#e9ecef'
-        },
         '& .MuiOutlinedInput-root': {
+            form: {
+                autocomplete: 'off',
+              },
             color: 'white',
             '& fieldset': {
                 borderColor: '#e9ecef',
@@ -46,7 +48,7 @@ const CssTextField = withStyles({
             '&.Mui-focused fieldset': {
                 borderColor: '#e9ecef',
                 color: '#e9ecef'
-            },
+            }
         }
     }
 })(TextField);
@@ -60,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
     },
     form_container: {
-        marginTop: '15rem',
+        marginTop: '13rem',
         padding: '1rem 2rem',
         backgroundColor: '#2020206d',
         borderRadius: '4px',
@@ -162,7 +164,6 @@ const AddMovie = () => {
                                 label="Title"
                                 name="title"
                                 value={title}
-                                autoFocus
                                 onChange={onUserInput}
                             />
                             <CssTextField
@@ -175,6 +176,7 @@ const AddMovie = () => {
                                 type="text"
                                 id="genre"
                                 color="secondary"
+                                autocomplete="off"
                                 onChange={onUserInput}
                             />
                             <CssTextField
