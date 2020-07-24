@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 // import clsx from 'clsx';
 import Accordion from '@material-ui/core/Accordion';
@@ -87,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 const MovieList = (props) => {
 
     const id = props.id;
-    
+
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
@@ -101,14 +102,14 @@ const MovieList = (props) => {
     };
 
     const deleteMovieHandler = async props => {
-        const response = await MoviesApi.delete(`/deletemovie/${id}`);
+        await MoviesApi.delete(`/deletemovie/${id}`);
         setOpen(false);
         window.location.reload(false);
     }
 
     return (
         <React.Fragment>
-            
+
             <Accordion className={classes.accordion}>
                 <AccordionSummary
                     aria-controls="panel1c-content"
@@ -125,15 +126,17 @@ const MovieList = (props) => {
                     </div>
                     <div className={classes.column4}>
                         <Typography className={classes.heading}>
-                            <StarRating starCount={props.rating} id={props.id}/>
+                            <StarRating starCount={props.rating} id={props.id} />
                         </Typography>
                     </div>
                 </AccordionSummary>
 
                 <AccordionActions className={classes.action_bar}>
-                    <Button size="small" variant="text" color="action" className={classes.buttonupdate} startIcon={<EditIcon />}>
-                        Update
+                    <Link to={`/${props.id}/updatemovie`} exact>
+                        <Button size="small" variant="text" color="action" className={classes.buttonupdate} startIcon={<EditIcon />}>
+                            Update
                     </Button>
+                    </Link>
                     <Button size="small" variant="text" color="secondary" onClick={handleClickOpen} className={classes.buttondelete} startIcon={<DeleteIcon />}>
                         Delete
                     </Button>
@@ -149,7 +152,7 @@ const MovieList = (props) => {
                 <DialogTitle id="alert-dialog-title">{"Delete this movie?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                    Are you sure you want to delete this movie?
+                        Are you sure you want to delete this movie?
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>

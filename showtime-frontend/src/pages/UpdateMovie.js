@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useState,useEffect } from 'react';
+import { useHistory, useParams} from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -14,7 +11,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import StarRating from '../components/StarRating';
 import MoviesApi from '../api/MoviesApi';
 
 
@@ -86,13 +82,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const AddMovie = () => {
+const UpdateMovie = () => {
+
+    const { id } = useParams();
 
     let history = useHistory();
 
     const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
-    const [rating, setRating] = useState('');
 
     const [open, setOpen] = React.useState(false);
 
@@ -105,6 +102,11 @@ const AddMovie = () => {
         history.push('/')
     };
 
+    const getMovies = async props=> {
+        const response = await MoviesApi.get(`/moviedetails/${id}`);
+        setTitle(response.data[0].title);
+        setGenre(response.data[0].genre);
+    }
 
     const onUserInput = e => {
         switch (e.target.id) {
@@ -114,33 +116,25 @@ const AddMovie = () => {
             case 'genre':
                 setGenre(e.target.value);
                 break;
-            case 'rating':
-                setRating(e.target.value);
-                break;
             default:
         }
-        console.log(title, genre, rating);
+        console.log(title, genre);
     }
 
     const movieSubmitHandler = async e => {
         e.preventDefault();
-        await MoviesApi.post('/addmovie', {
+        await MoviesApi.put(`/updatemovie/${id}`, {
             title: title,
-            genre: genre,
-            rating: rating
+            genre: genre
         })
         setOpen(true);
-        setTitle('');
-        setGenre('');
-        setRating('');
-            // .then((response) => {
-            //     console.log({ message: "User Created Successfully!", headerMessage: "Success!" });
-            // })
-            // .catch((error) => {
-            //     console.log({ message: "User Creation Failed! Please Try Again", headerMessage: "Failed!" });
-            // });
 
     }
+
+    useEffect(() => {
+        getMovies();
+    }, []);
+
 
     const classes = useStyles();
 
@@ -151,7 +145,7 @@ const AddMovie = () => {
                 <Container component="main" maxWidth="xs" className={classes.form_container} >
                     <div className={classes.paper}>
                         <Typography component="h1" variant="h5" className={classes.heading}>
-                            Add Movie
+                            Update Movie
                         </Typography>
                         <form className={classes.form} onSubmit={movieSubmitHandler} noValidate>
                             <CssTextField
@@ -177,38 +171,14 @@ const AddMovie = () => {
                                 color="secondary"
                                 onChange={onUserInput}
                             />
-                            <CssTextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                name="rating"
-                                label="Rating (Out of 5)"
-                                value={rating}
-                                type="text"
-                                id="rating"
-                                color="secondary"
-                                onChange={onUserInput}
-                            />
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 className={classes.submit}
                             >
-                                Add Movie
+                                Save
                             </Button>
-                            {/* <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid> */}
                         </form>
                     </div>
                 </Container>
@@ -224,7 +194,7 @@ const AddMovie = () => {
             <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    Movie Added Successfully !
+                    Movie Updated Successfully!
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -238,4 +208,4 @@ const AddMovie = () => {
     );
 }
 
-export default AddMovie;
+export default UpdateMovie;
