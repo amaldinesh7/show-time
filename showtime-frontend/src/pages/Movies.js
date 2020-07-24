@@ -20,7 +20,19 @@ const Movies = () => {
 
     const getMovies = async moviesData => {
         const response = await MoviesApi.get('/allmovies');
-        setMoviesData(response.data);
+        const temp_moviesData = response.data
+        
+        //sorting the fetched movies based on title in ascending order
+        temp_moviesData.sort(function(a, b){
+            var nameA=a.title.toLowerCase(), nameB=b.title.toLowerCase()
+            if (nameA < nameB) //sort string ascending
+                return -1 
+            if (nameA > nameB)
+                return 1
+            return 0 //default return value (no sorting)
+        })
+
+        setMoviesData(temp_moviesData);
     }
 
     useEffect(() => {

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 
 import MainNavigation from "./components/shared/Navigation/MainNavigation";
 import Movies from "./pages/Movies";
+import AddMovie from "./pages/AddMovie";
 
 import './App.css';
 
@@ -14,6 +15,9 @@ const App = () => {
         <Switch>
           <Route path="/" exact>
             <Movies />
+          </Route>
+          <Route path="/addmovie" exact>
+            <AddMovie />
           </Route>
         </Switch>
       </main>

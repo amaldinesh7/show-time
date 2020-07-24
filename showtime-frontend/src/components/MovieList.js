@@ -20,8 +20,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import StarRating from './StarRating';
 import MoviesApi from '../api/MoviesApi';
 
-import './MovieList.css';
-
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: 80,
@@ -127,7 +125,7 @@ const MovieList = (props) => {
                     </div>
                     <div className={classes.column4}>
                         <Typography className={classes.heading}>
-                            <StarRating starCount={props.rating} />
+                            <StarRating starCount={props.rating} id={props.id}/>
                         </Typography>
                     </div>
                 </AccordionSummary>
