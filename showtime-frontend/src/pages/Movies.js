@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-
 import MovieList from '../components/MovieList';
-import MoviesApi from '../api/MoviesApi';
+import { fetchMovies } from '../redux/actions';
 
-const Movies = () => {
+const Movies = (props) => {
 
     const [moviesData, setMoviesData] = useState([])
+
+    // const getMovies = async moviesData => {
+    //     const temp_moviesData = props.movies
+    //     //sorting the fetched movies based on title in ascending order
+    //     temp_moviesData.sort(function (a, b) {
+    //         var nameA = a.title.toLowerCase(), nameB = b.title.toLowerCase()
+    //         if (nameA < nameB) //sort string ascending
+    //             return -1
+    //         if (nameA > nameB)
+    //             return 1
+    //         return 0 //default return value (no sorting)
+    //     })
+    //     setMoviesData(temp_moviesData);
+    // }
+
+
+    useEffect(() => {
+        props.fetchMovies();
+    },[]);
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -17,36 +36,22 @@ const Movies = () => {
     }));
 
     const classes = useStyles();
-
-    const getMovies = async moviesData => {
-        const response = await MoviesApi.get('/allmovies');
-        const temp_moviesData = response.data
-        
-        //sorting the fetched movies based on title in ascending order
-        temp_moviesData.sort(function(a, b){
-            var nameA=a.title.toLowerCase(), nameB=b.title.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-                return -1 
-            if (nameA > nameB)
-                return 1
-            return 0 //default return value (no sorting)
-        })
-
-        setMoviesData(temp_moviesData);
-    }
-
-    useEffect(() => {
-        getMovies();
-    }, []);
-
+    console.log(props);
+    
     return (
         <div className={classes.root}>
-            {moviesData.map((movie,index) => (
-                <MovieList key={movie.id} id={movie.id} number={index+1} genre={movie.genre} title={movie.title} rating={movie.rating} />
+            {props.movies.ids.map((movie, index) => (
+                <MovieList key={movie} id={movie} number={index + 1} genre={props.movies.dict[movie].genre} title={props.movies.dict[movie].title} rating={props.movies.dict[movie].rating} />
             ))}
         </div>
 
     );
 };
 
-export default Movies
+
+const mapStateToProps = (state) => {
+    return { movies: state.movies }
+}
+
+
+export default connect(mapStateToProps, { fetchMovies})(Movies);
