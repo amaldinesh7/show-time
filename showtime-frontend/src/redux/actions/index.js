@@ -13,10 +13,22 @@ export const fetchMovies = () => {
         dispatch({ type: FETCH_MOVIES_INIT });
         try {
             const response = await MoviesApi.get('/allmovies');
-            console.log('apidata ---> response',response.data)
             dispatch({ type: FETCH_MOVIES_SUCCESS, payload: response.data });
         } catch (e) {
             dispatch({ type: FETCH_MOVIES_FAILURE });
+        }
+    }
+};
+
+export const deleteMovie = (id) => {
+    return async (dispatch) => {
+        dispatch({ type: DELETE_MOVIE_INIT });
+        try {
+            await MoviesApi.delete(`/deletemovie/${id}`);
+            dispatch({ type: DELETE_MOVIE_SUCCESS, payload: { id } });
+
+        } catch (e) {
+            dispatch({ type: DELETE_MOVIE_FAILURE });
         }
     }
 };

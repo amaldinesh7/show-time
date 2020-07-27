@@ -1,14 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import { makeStyles } from '@material-ui/core/styles';
-// import clsx from 'clsx';
 import Accordion from '@material-ui/core/Accordion';
-// import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionActions from '@material-ui/core/AccordionActions';
 import Typography from '@material-ui/core/Typography';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -20,6 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import StarRating from './StarRating';
 import MoviesApi from '../api/MoviesApi';
+import {deleteMovie} from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,10 +100,10 @@ const MovieList = (props) => {
         setOpen(false);
     };
 
-    const deleteMovieHandler = async props => {
-        await MoviesApi.delete(`/deletemovie/${id}`);
+    const deleteMovieHandler = () => {
+        console.log(id);
+        props.deleteMovie(id);
         setOpen(false);
-        window.location.reload(false);
     }
 
     return (
@@ -168,4 +167,11 @@ const MovieList = (props) => {
     );
 };
 
-export default MovieList;
+
+const mapStateToProps = (state) => ({
+    movies: state.movies
+  });
+
+
+export default connect(mapStateToProps,{deleteMovie})(MovieList);
+

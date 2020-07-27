@@ -30,7 +30,6 @@ export default (state = initialMoviesState, action) => {
         case FETCH_MOVIES_SUCCESS:
             const responseIds = action.payload.map(res => res.id);
             const responseDict = keyBy(action.payload, 'id');
-            console.log("Dict --->",responseDict);
             return {
                 ids: responseIds,
                 dict: responseDict,
@@ -42,6 +41,20 @@ export default (state = initialMoviesState, action) => {
                 ...state,
                 status: apiStatuses.DONE
             };
+            
+        case DELETE_MOVIE_SUCCESS:
+            const newIds = state.ids.filter(id => id !== action.payload.id);
+            const newDict = {};
+            state.ids.forEach(id => {
+                if (id !== action.payload.id) {
+                    newDict[id] = state.dict[id];
+                }
+            })
+            return {
+                ...state,
+                ids: newIds,
+                dict: newDict
+            }
         default:
             return state;
     }
