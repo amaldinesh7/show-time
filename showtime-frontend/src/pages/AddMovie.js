@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -11,13 +13,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import MoviesApi from '../api/MoviesApi';
+import { addMovie } from '../redux/actions';
 
 
 const CssTextField = withStyles({
     root: {
-        '& .MuiInputLabel-root':{
-            color:'#e9ecef'
+        '& .MuiInputLabel-root': {
+            color: '#e9ecef'
         },
         '& .MuiInputBase-input': {
             color: '#e9ecef'
@@ -31,7 +33,7 @@ const CssTextField = withStyles({
         '& .MuiOutlinedInput-root': {
             form: {
                 autocomplete: 'off',
-              },
+            },
             color: 'white',
             '& fieldset': {
                 borderColor: '#e9ecef',
@@ -84,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const AddMovie = () => {
+const AddMovie = (props) => {
 
     let history = useHistory();
 
@@ -122,118 +124,103 @@ const AddMovie = () => {
 
     const movieSubmitHandler = async e => {
         e.preventDefault();
-        await MoviesApi.post('/addmovie', {
-            title: title,
-            genre: genre,
-            rating: rating
-        })
+        // await MoviesApi.post('/addmovie', {
+        //     title: title,
+        //     genre: genre,
+        //     rating: rating
+        // })
+        props.addMovie(title,genre,rating);
         setOpen(true);
         setTitle('');
         setGenre('');
         setRating('');
-            // .then((response) => {
-            //     console.log({ message: "User Created Successfully!", headerMessage: "Success!" });
-            // })
-            // .catch((error) => {
-            //     console.log({ message: "User Creation Failed! Please Try Again", headerMessage: "Failed!" });
-            // });
-
     }
-
+    console.log('store ---> structure',props.movies);
     const classes = useStyles();
 
     return (
         <React.Fragment>
-        <Container fixed>
-            <Typography component="div" style={{ backgroundColor: '#121212', height: '75vh', margin: '0 auto' }} >
-                <Container component="main" maxWidth="xs" className={classes.form_container} >
-                    <div className={classes.paper}>
-                        <Typography component="h1" variant="h5" className={classes.heading}>
-                            Add Movie
-                        </Typography>
-                        <form className={classes.form} onSubmit={movieSubmitHandler} noValidate>
-                            <CssTextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                id="title"
-                                label="Title"
-                                name="title"
-                                value={title}
-                                onChange={onUserInput}
-                            />
-                            <CssTextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                name="genre"
-                                label="Genre"
-                                value={genre}
-                                type="text"
-                                id="genre"
-                                color="secondary"
-                                autocomplete="off"
-                                onChange={onUserInput}
-                            />
-                            <CssTextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                name="rating"
-                                label="Rating (Out of 5)"
-                                value={rating}
-                                type="text"
-                                id="rating"
-                                color="secondary"
-                                onChange={onUserInput}
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                className={classes.submit}
-                            >
+            <Container fixed>
+                <Typography component="div" style={{ backgroundColor: '#121212', height: '75vh', margin: '0 auto' }} >
+                    <Container component="main" maxWidth="xs" className={classes.form_container} >
+                        <div className={classes.paper}>
+                            <Typography component="h1" variant="h5" className={classes.heading}>
                                 Add Movie
+                        </Typography>
+                            <form className={classes.form} onSubmit={movieSubmitHandler} noValidate>
+                                <CssTextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    id="title"
+                                    label="Title"
+                                    name="title"
+                                    value={title}
+                                    onChange={onUserInput}
+                                />
+                                <CssTextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    name="genre"
+                                    label="Genre"
+                                    value={genre}
+                                    type="text"
+                                    id="genre"
+                                    color="secondary"
+                                    autocomplete="off"
+                                    onChange={onUserInput}
+                                />
+                                <CssTextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    name="rating"
+                                    label="Rating (Out of 5)"
+                                    value={rating}
+                                    type="text"
+                                    id="rating"
+                                    color="secondary"
+                                    onChange={onUserInput}
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    className={classes.submit}
+                                >
+                                    Add Movie
                             </Button>
-                            {/* <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid> */}
-                        </form>
-                    </div>
-                </Container>
-            </Typography>
-        </Container>
+                            </form>
+                        </div>
+                    </Container>
+                </Typography>
+            </Container>
 
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Movie Added Successfully !
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Movie Added Successfully !
                 </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Ok
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Ok
                 </Button>
-            </DialogActions>
-        </Dialog>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
 
     );
 }
 
-export default AddMovie;
+const mapStateToProps = () => ({
+});
+
+export default connect(mapStateToProps, { addMovie })(AddMovie);

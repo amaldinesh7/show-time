@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import MovieList from '../components/MovieList';
@@ -6,7 +6,7 @@ import { fetchMovies } from '../redux/actions';
 
 const Movies = (props) => {
 
-    const [moviesData, setMoviesData] = useState([])
+    // const [moviesData, setMoviesData] = useState([])
 
     // const getMovies = async moviesData => {
     //     const temp_moviesData = props.movies

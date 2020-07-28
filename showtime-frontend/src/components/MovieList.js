@@ -17,7 +17,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import StarRating from './StarRating';
-import MoviesApi from '../api/MoviesApi';
 import {deleteMovie} from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({

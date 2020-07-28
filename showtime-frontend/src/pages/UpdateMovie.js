@@ -1,5 +1,7 @@
-import React, { useState,useEffect } from 'react';
-import { useHistory, useParams} from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useHistory, useParams } from "react-router-dom";
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -11,13 +13,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import MoviesApi from '../api/MoviesApi';
+import { updateMovie } from '../redux/actions';
 
 
 const CssTextField = withStyles({
     root: {
-        '& .MuiInputLabel-root':{
-            color:'#e9ecef'
+        '& .MuiInputLabel-root': {
+            color: '#e9ecef'
         },
         '& .MuiInputBase-input': {
             color: '#e9ecef'
@@ -85,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const UpdateMovie = () => {
+const UpdateMovie = (props) => {
 
     const { id } = useParams();
 
@@ -94,21 +96,16 @@ const UpdateMovie = () => {
     const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
 
-    const [open, setOpen] = React.useState(false);
-
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
+    const [open, setOpen] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
         history.push('/')
     };
 
-    const getMovies = async props=> {
-        const response = await MoviesApi.get(`/moviedetails/${id}`);
-        setTitle(response.data[0].title);
-        setGenre(response.data[0].genre);
+    const getMovies = () => {
+        setTitle(props.movies.dict[id].title);
+        setGenre(props.movies.dict[id].genre);
     }
 
     const onUserInput = e => {
@@ -126,10 +123,7 @@ const UpdateMovie = () => {
 
     const movieSubmitHandler = async e => {
         e.preventDefault();
-        await MoviesApi.put(`/updatemovie/${id}`, {
-            title: title,
-            genre: genre
-        })
+        props.updateMovie(id, title, genre);
         setOpen(true);
 
     }
@@ -138,77 +132,80 @@ const UpdateMovie = () => {
         getMovies();
     }, []);
 
-
     const classes = useStyles();
 
     return (
         <React.Fragment>
-        <Container fixed>
-            <Typography component="div" style={{ backgroundColor: '#121212', height: '75vh', margin: '0 auto' }} >
-                <Container component="main" maxWidth="xs" className={classes.form_container} >
-                    <div className={classes.paper}>
-                        <Typography component="h1" variant="h5" className={classes.heading}>
-                            Update Movie
+            <Container fixed>
+                <Typography component="div" style={{ backgroundColor: '#121212', height: '75vh', margin: '0 auto' }} >
+                    <Container component="main" maxWidth="xs" className={classes.form_container} >
+                        <div className={classes.paper}>
+                            <Typography component="h1" variant="h5" className={classes.heading}>
+                                Update Movie
                         </Typography>
-                        <form className={classes.form} onSubmit={movieSubmitHandler} noValidate>
-                            <CssTextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                id="title"
-                                label="Title"
-                                name="title"
-                                value={title}
-                                autoFocus
-                                onChange={onUserInput}
-                            />
-                            <CssTextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                name="genre"
-                                label="Genre"
-                                value={genre}
-                                type="text"
-                                id="genre"
-                                color="secondary"
-                                onChange={onUserInput}
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                className={classes.submit}
-                            >
-                                Save
+                            <form className={classes.form} onSubmit={movieSubmitHandler} noValidate>
+                                <CssTextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    id="title"
+                                    label="Title"
+                                    name="title"
+                                    value={title}
+                                    autoFocus
+                                    onChange={onUserInput}
+                                />
+                                <CssTextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    name="genre"
+                                    label="Genre"
+                                    value={genre}
+                                    type="text"
+                                    id="genre"
+                                    color="secondary"
+                                    onChange={onUserInput}
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    className={classes.submit}
+                                >
+                                    Save
                             </Button>
-                        </form>
-                    </div>
-                </Container>
-            </Typography>
-        </Container>
+                            </form>
+                        </div>
+                    </Container>
+                </Typography>
+            </Container>
 
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Movie Updated Successfully!
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Movie Updated Successfully!
                 </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Ok
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Ok
                 </Button>
-            </DialogActions>
-        </Dialog>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
 
     );
 }
 
-export default UpdateMovie;
+const mapStateToProps = (state) => ({
+    movies: state.movies
+});
+
+export default connect(mapStateToProps, { updateMovie })(UpdateMovie);
