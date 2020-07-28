@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
         height: 34
     },
     heading: {
-        fontSize: theme.typography.pxToRem(15),
+        fontSize: theme.typography.pxToRem(17),
         color: 'rgba(255, 255, 255, 1)'
     },
     secondaryHeading: {
-        fontSize: theme.typography.pxToRem(15),
+        fontSize: theme.typography.pxToRem(17),
         color: 'rgba(255, 255, 255, 0.7)',
     },
     icon: {

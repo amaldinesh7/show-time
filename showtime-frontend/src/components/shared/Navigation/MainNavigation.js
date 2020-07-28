@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
-
+import FilterOption from "../FilterOption";
 import './MainNavigation.css';
 import Image from "../../../images/showtime-logo.jpg";
 
@@ -19,8 +19,11 @@ const MainNavigation = () => {
                     <li>
                         <NavLink to="/addmovie" exact>Add Movie</NavLink>
                     </li>
-                    <li>
+                    {/* <li>
                         <NavLink className="logout" to="/" >Logout</NavLink>
+                    </li> */}
+                    <li>
+                        <FilterOption />
                     </li>
                 </ul>
             </nav>
