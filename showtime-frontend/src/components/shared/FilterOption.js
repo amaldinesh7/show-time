@@ -6,8 +6,6 @@ import {ratingFilterAction} from '../../redux/actions';
 const FilterOption = (props) => {
 
     const ratingFilterClickHandler = (e,data) => {
-        console.log("CLICKED")
-        console.log("DATA --->",data);
         props.ratingFilterAction(data.value)
     }
 

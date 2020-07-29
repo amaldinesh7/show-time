@@ -1,9 +1,11 @@
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import MovieList from '../components/MovieList';
 import { fetchMovies } from '../redux/actions';
-import {ratingFilterHandler} from '../redux/handlers';
+import { ratingFilterSelector } from '../redux/selectors';
+import { sortMovieSelector } from '../redux/selectors';
+
 
 const Movies = (props) => {
 
@@ -26,7 +28,7 @@ const Movies = (props) => {
 
     useEffect(() => {
         props.fetchMovies();
-    },[]);
+    }, []);
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -37,7 +39,7 @@ const Movies = (props) => {
     }));
 
     const classes = useStyles();
-    
+
     return (
         <div className={classes.root}>
             {props.movies.ids.map((movie, index) => (
@@ -50,8 +52,12 @@ const Movies = (props) => {
 
 
 const mapStateToProps = (state) => {
-    return { movies:ratingFilterHandler(state.movies,state.movies.ratingFilter)}
+    const filteredMovies = ratingFilterSelector(state.movies, state.filterMovies.ratingFilter)
+    console.log("STATE--->",filteredMovies)
+    return {
+        movies: sortMovieSelector(filteredMovies, state.sortMovies.sortOrder)
+    }
 }
 
 
-export default connect(mapStateToProps, { fetchMovies})(Movies);
+export default connect(mapStateToProps, { fetchMovies })(Movies);

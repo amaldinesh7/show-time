@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 import FilterOption from "../FilterOption";
+import SortOption from "../SortOption";
 import './MainNavigation.css';
 import Image from "../../../images/showtime-logo.jpg";
 
@@ -24,6 +25,9 @@ const MainNavigation = () => {
                     </li> */}
                     <li>
                         <FilterOption />
+                    </li>
+                    <li>
+                        <SortOption />
                     </li>
                 </ul>
             </nav>

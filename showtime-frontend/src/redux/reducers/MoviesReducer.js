@@ -1,5 +1,5 @@
 import { keyBy } from 'lodash';
-import { ratingFilter } from '../handlers';
+import { ratingFilter } from '../selectors';
 
 const FETCH_MOVIES_INIT = 'FETCH_MOVIES_INIT'
 const FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS'
@@ -21,7 +21,6 @@ const UPDATE_RATING_INIT = 'UPDATE_RATING_INIT';
 const UPDATE_RATING_SUCCESS = 'UPDATE_RATING_SUCCESS';
 const UPDATE_RATING_FAILURE = 'UPDATE_RATING_FAILURE';
 
-const ADD_RATING_FILTER = 'ADD_RATING_FILTER';
 
 
 const apiStatuses = {
@@ -33,7 +32,6 @@ const initialMoviesState = {
     ids: [],
     dict: {},
     status: apiStatuses.DONE,
-    ratingFilter: null
 };
 
 export default (state = initialMoviesState, action) => {
@@ -162,12 +160,6 @@ export default (state = initialMoviesState, action) => {
             return {
                 ...state,
                 status: apiStatuses.DONE
-            };
-
-        case ADD_RATING_FILTER:
-            return {
-                ...state,
-                ratingFilter:action.payload.ratingFilter
             };
 
         default:

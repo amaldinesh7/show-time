@@ -21,6 +21,7 @@ const UPDATE_RATING_SUCCESS = 'UPDATE_RATING_SUCCESS';
 const UPDATE_RATING_FAILURE = 'UPDATE_RATING_FAILURE';
 
 const ADD_RATING_FILTER = 'ADD_RATING_FILTER';
+const ADD_SORT_ORDER = 'ADD_SORT_ORDER';
 
 
 export const fetchMovies = () => {
@@ -118,6 +119,17 @@ export const ratingFilterAction = (ratingFilter) => {
         dispatch({
             type: ADD_RATING_FILTER, payload: {
                 ratingFilter: ratingFilter
+            }
+        });
+
+    }
+};
+
+export const sortMovieAction = (sortOrder) => {
+    return (dispatch) => {
+        dispatch({
+            type: ADD_SORT_ORDER, payload: {
+                sortOrder: sortOrder
             }
         });
 
