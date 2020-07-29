@@ -20,6 +20,8 @@ const UPDATE_RATING_INIT = 'UPDATE_RATING_INIT';
 const UPDATE_RATING_SUCCESS = 'UPDATE_RATING_SUCCESS';
 const UPDATE_RATING_FAILURE = 'UPDATE_RATING_FAILURE';
 
+const ADD_RATING_FILTER = 'ADD_RATING_FILTER';
+
 
 export const fetchMovies = () => {
     return async (dispatch) => {
@@ -108,5 +110,16 @@ export const updateRating = (id, rating) => {
         } catch (e) {
             dispatch({ type: UPDATE_RATING_FAILURE });
         }
+    }
+};
+
+export const ratingFilterAction = (ratingFilter) => {
+    return (dispatch) => {
+        dispatch({
+            type: ADD_RATING_FILTER, payload: {
+                ratingFilter: ratingFilter
+            }
+        });
+
     }
 };

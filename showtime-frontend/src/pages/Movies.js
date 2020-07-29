@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import MovieList from '../components/MovieList';
 import { fetchMovies } from '../redux/actions';
+import {ratingFilterHandler} from '../redux/handlers';
 
 const Movies = (props) => {
 
@@ -49,7 +50,7 @@ const Movies = (props) => {
 
 
 const mapStateToProps = (state) => {
-    return { movies: state.movies }
+    return { movies:ratingFilterHandler(state.movies,state.movies.ratingFilter)}
 }
 
 
