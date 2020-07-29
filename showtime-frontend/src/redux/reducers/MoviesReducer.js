@@ -1,5 +1,4 @@
 import { keyBy } from 'lodash';
-import { ratingFilter } from '../selectors';
 
 const FETCH_MOVIES_INIT = 'FETCH_MOVIES_INIT'
 const FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS'

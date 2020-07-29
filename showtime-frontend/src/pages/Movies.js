@@ -42,18 +42,17 @@ const Movies = (props) => {
 
     return (
         <div className={classes.root}>
-            {props.movies.ids.map((movie, index) => (
-                <MovieList key={movie} id={movie} number={index + 1} genre={props.movies.dict[movie].genre} title={props.movies.dict[movie].title} rating={props.movies.dict[movie].rating} />
+            {props.movies.map((movie, index) => (
+                <MovieList key={movie.id} id={movie.id} number={index + 1} genre={movie.genre} title={movie.title} rating={movie.rating} />
             ))}
         </div>
 
     );
 };
 
-
 const mapStateToProps = (state) => {
     const filteredMovies = ratingFilterSelector(state.movies, state.filterMovies.ratingFilter)
-    console.log("STATE--->",filteredMovies)
+    console.log("STATE--->", filteredMovies)
     return {
         movies: sortMovieSelector(filteredMovies, state.sortMovies.sortOrder)
     }
