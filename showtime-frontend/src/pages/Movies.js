@@ -51,10 +51,9 @@ const Movies = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const filteredMovies = ratingFilterSelector(state.movies, state.filterMovies.ratingFilter)
-    console.log("STATE--->", filteredMovies)
+    const filteredMovies = ratingFilterSelector(state)
     return {
-        movies: sortMovieSelector(filteredMovies, state.sortMovies.sortOrder)
+        movies: sortMovieSelector(filteredMovies,state)
     }
 }
 
