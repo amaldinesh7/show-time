@@ -13,6 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import MainNavigation from '../components/shared/Navigation/MainNavigation';
 import { updateMovie } from '../redux/actions';
 
 
@@ -136,6 +137,7 @@ const UpdateMovie = (props) => {
 
     return (
         <React.Fragment>
+            <MainNavigation />
             <Container fixed>
                 <Typography component="div" style={{ backgroundColor: '#121212', height: '75vh', margin: '0 auto' }} >
                     <Container component="main" maxWidth="xs" className={classes.form_container} >

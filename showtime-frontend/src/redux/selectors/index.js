@@ -17,6 +17,7 @@ import { createSelector } from 'reselect'
 
 const getMovie = (state) => state.movies
 const getRatingFilter = (state) => state.filterMovies.ratingFilter
+const getSortOrder = (state) => state.sortMovies.sortOrder
 
 export const ratingFilterSelector = createSelector(
     [getMovie, getRatingFilter],
@@ -37,11 +38,8 @@ export const ratingFilterSelector = createSelector(
     }
 )
 
-const getSortOrder = (filteredMovies,state) => state.sortMovies.sortOrder
-const getFilteredMovies = (filteredMovies,state) => filteredMovies
-
 export const sortMovieSelector = createSelector(
-    [getFilteredMovies, getSortOrder],
+    [ratingFilterSelector, getSortOrder],
     (movies, sortOrder) => {
         console.log("SORT ----> APPLIED")
         if (sortOrder === null || sortOrder === undefined) {

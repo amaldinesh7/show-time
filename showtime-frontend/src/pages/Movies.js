@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import MovieList from '../components/MovieList';
 import { fetchMovies } from '../redux/actions';
-import { ratingFilterSelector } from '../redux/selectors';
 import { sortMovieSelector } from '../redux/selectors';
+
+import MainNavigation from '../components/shared/Navigation/MainNavigation';
 
 
 const Movies = (props) => {
@@ -41,19 +42,20 @@ const Movies = (props) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            {props.movies.map((movie, index) => (
-                <MovieList key={movie.id} id={movie.id} number={index + 1} genre={movie.genre} title={movie.title} rating={movie.rating} />
-            ))}
-        </div>
-
+        <React.Fragment>
+            <MainNavigation />
+            <div className={classes.root}>
+                {props.movies.map((movie, index) => (
+                    <MovieList key={movie.id} id={movie.id} number={index + 1} genre={movie.genre} title={movie.title} rating={movie.rating} />
+                ))}
+            </div>
+        </React.Fragment>
     );
 };
 
 const mapStateToProps = (state) => {
-    const filteredMovies = ratingFilterSelector(state)
     return {
-        movies: sortMovieSelector(filteredMovies,state)
+        movies: sortMovieSelector(state)
     }
 }
 

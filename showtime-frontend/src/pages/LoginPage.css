@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap");
+
+.landing-page {
+  background-color: #0c0b0b;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+}
+
+.landing-page__content {
+  margin: 30vh 0;
+}
+
+.title {
+  margin: 0 auto;
+}
+
+.showtime-logo-main {
+  display: block;
+  margin: 0 auto;
+  height: 35%;
+  width: 35%;
+}
+
+.auth-buttons__div {
+  width: 40%;
+  margin:0 auto;
+  padding:4rem 0;
+  text-align: center;
+}
+
+.facebook-auth__button {
+  margin: 0 .5rem !important;
+  width: 11rem;
+}
+
+.github-auth__button {
+    margin: 0 .5rem !important;
+    width: 11rem;
+  }
