@@ -2,7 +2,8 @@
 
 const Hapi = require("hapi");
 const Bell = require("bell");
-// const Vision = require("vision"); start
+const Vision = require("vision");
+const Ejs = require('ejs');
 
 const { configureRoutes } = require("./src/routes/routes");
 
@@ -32,7 +33,15 @@ const init = async () => {
     port: 3001, host: "localhost"
   });
 
-  await server.register(Bell)
+  await server.register([Bell,Vision])
+
+  server.views({
+    engines: {
+      ejs: Ejs
+    },
+    relativeTo: __dirname,
+    path: 'templates'
+  });
   
   server.auth.strategy('github', 'bell', {
     provider: 'github',

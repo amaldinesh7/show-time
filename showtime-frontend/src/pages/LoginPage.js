@@ -10,7 +10,7 @@ import './LoginPage.css';
 class LoginPage extends React.Component {
 
     onAuthButtonClick = () => {
-        axios.get('http://localhost:3001/bell/door')
+        axios.get('/login/github')
             .then(response => {
                 console.log("response",response);
             })
@@ -31,11 +31,12 @@ class LoginPage extends React.Component {
                             <Icon name='facebook' />
                             Facebook
                         </Button>
-
-                        <Button color='green' size='large' className="github-auth__button" onClick={this.onAuthButtonClick}>
+                        <a href="http://localhost:3001/login/github">
+                        <Button color='green' size='large' className="github-auth__button">
                             <Icon name='github' />
                             GitHub
                         </Button>
+                        </a>
                     </div>
                 </div>
             </div>

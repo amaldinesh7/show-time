@@ -1,4 +1,5 @@
 const controllers = require("../controllers/index");
+const baseUrl = 'http://localhost:3000';
 
 exports.configureRoutes = (server) => {
 
@@ -14,7 +15,7 @@ exports.configureRoutes = (server) => {
     },
     {
       method: ['GET','POST'],
-      path: '/bell/door',
+      path: '/login/github',
       config: {
         cors: {
           origin: ["*"],
@@ -32,7 +33,7 @@ exports.configureRoutes = (server) => {
           if (!request.auth.isAuthenticated) {
             return reply('Authentication failed due to: ' + request.auth.error.message);
           }
-          reply('<pre>' + JSON.stringify(request.auth.credentials, null, 4) + '</pre>');
+          reply.redirect('http://localhost:3001/movies');
         }
       }
     },
@@ -66,5 +67,53 @@ exports.configureRoutes = (server) => {
       path: "/moviedetails/{movieid}",
       handler: controllers.movieDetails.movieDetails,
     },
+    {
+      method: 'GET',
+      path: '/',
+      handler: (request, reply) => {
+        reply.view('index', {
+          templateData: {
+            baseUrl,
+            title: 'Movie App'
+          }
+        });
+      }
+    },
+    {
+      method: 'GET',
+      path: '/movies',
+      handler: (request, reply) => {
+        reply.view('index', {
+          templateData: {
+            baseUrl,
+            title: 'Movie App'
+          }
+        });
+      }
+    },
+    {
+      method: 'GET',
+      path: '/addmovies',
+      handler: (request, reply) => {
+        reply.view('index', {
+          templateData: {
+            baseUrl,
+            title: 'Movie App'
+          }
+        });
+      }
+    }
+    // {
+    //   method: 'GET',
+    //   path: '/addmovies',
+    //   handler: (request, reply) => {
+    //     reply.view('index', {
+    //       templateData: {
+    //         baseUrl,
+    //         title: 'Movie App'
+    //       }
+    //     });
+    //   }
+    // }  
   ]);
 };
