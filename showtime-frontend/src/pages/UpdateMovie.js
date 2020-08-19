@@ -101,7 +101,7 @@ const UpdateMovie = (props) => {
 
     const handleClose = () => {
         setOpen(false);
-        history.push('/')
+        history.push('/movies')
     };
 
     const getMovies = () => {

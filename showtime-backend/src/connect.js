@@ -31,8 +31,22 @@ const Movies = sequelize.define("movies", {
     type: Sequelize.INTEGER,
   },
 });
+
+const Sessions = sequelize.define("sessions", {
+  session_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  session_token: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+Sessions.sync()
 Movies.sync();
 
 module.exports = {
-  Movies,
+  Movies,Sessions,
 };

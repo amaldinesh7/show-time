@@ -4,6 +4,7 @@ const updateRating = require("./updateRating");
 const deleteMovie = require("./deleteMovie");
 const listAllMovies = require("./listAllMovies");
 const movieDetails = require("./movieDetails");
+const logoutCurrentUser = require("./logoutCurrentUser");
 
 module.exports = {
   addMovie,
@@ -12,4 +13,5 @@ module.exports = {
   deleteMovie,
   listAllMovies,
   movieDetails,
+  logoutCurrentUser,
 };

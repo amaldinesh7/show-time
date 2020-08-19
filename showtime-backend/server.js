@@ -4,8 +4,11 @@ const Hapi = require("hapi");
 const Bell = require("bell");
 const Vision = require("vision");
 const Ejs = require('ejs');
+const Cookies = require('hapi-auth-cookie');
 
 const { configureRoutes } = require("./src/routes/routes");
+const Model = require('./src/connect');
+
 
 const init = async () => {
   const server = new Hapi.Server({
@@ -33,7 +36,7 @@ const init = async () => {
     port: 3001, host: "localhost"
   });
 
-  await server.register([Bell,Vision])
+  await server.register([Bell, Vision, Cookies]);
 
   server.views({
     engines: {
@@ -42,7 +45,7 @@ const init = async () => {
     relativeTo: __dirname,
     path: 'templates'
   });
-  
+
   server.auth.strategy('github', 'bell', {
     provider: 'github',
     password: 'cookie_encryption_password_secure',
@@ -53,6 +56,36 @@ const init = async () => {
     scope: []
   });
 
+  server.auth.strategy('facebook', 'bell', {
+    provider: 'facebook',
+    password: 'cookie_encryption_password_secure',
+    isSecure: false,
+    clientId: '2012837868858000',
+    clientSecret: 'e973a89c7344be1f7b24067c131a0f97',
+    location: 'http://localhost:3001',
+  });
+
+  server.auth.strategy('session', 'cookie', {
+    password: 'blah123asdklfaslfkajsdfklasdasdfasdfasdf',
+    cookie: 'sid',
+    redirectTo: '/',
+    isSameSite: false,
+    isSecure: false,
+    validateFunc: async (request, session, callback) => {
+
+      const userSession = await Model.Sessions.findOne({
+        where: {
+          session_token: request.state.sid.token
+        }
+      });
+      const hasCookie = !!userSession;
+      if (!hasCookie) {
+        return callback(null, false);
+      } else {
+        return callback(null, true);
+      }
+    }
+  })
 
   configureRoutes(server);
   server.start((err) => {
