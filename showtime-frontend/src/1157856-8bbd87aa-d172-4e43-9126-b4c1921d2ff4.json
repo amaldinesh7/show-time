@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "1157856-8bbd87aa-d172-4e43-9126-b4c1921d2ff4",
+		"name": "Non-linked Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add user",
+			"id": "1157856-238c5f15-368f-4b47-85a0-62bd1ecfcd40",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"id": "1157856-1acaad14-2a89-494c-aac2-6c0f3616f704",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "1157856-0603a6f4-fcc2-418d-b1f2-b7515d846426",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
